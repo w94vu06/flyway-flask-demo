@@ -1,8 +1,6 @@
 version: '3.8'
 services:
-  # ---------------------------
-  # QA DB
-  # ---------------------------
+
   qa-db:
     image: postgres:14
     container_name: qa-db
@@ -11,13 +9,10 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: root
     ports:
-      - "5433:5432"    # QA DB 對外連接埠 5433
+      - "5433:5432" 
     volumes:
       - qa_db_data:/var/lib/postgresql/data
 
-  # ---------------------------
-  # QA Web (Flask + Flyway)
-  # ---------------------------
   qa-web:
     build: .
     container_name: qa-web
@@ -30,11 +25,8 @@ services:
     depends_on:
       - qa-db
     ports:
-      - "5001:5000"    # QA Web 對外連接埠 5001
+      - "5001:5000" 
 
-  # ---------------------------
-  # Production DB
-  # ---------------------------
   prod-db:
     image: postgres:14
     container_name: prod-db
@@ -43,13 +35,10 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: root
     ports:
-      - "5434:5432"   # 線上DB 對外連接埠 5434
+      - "5434:5432"
     volumes:
       - prod_db_data:/var/lib/postgresql/data
 
-  # ---------------------------
-  # Production Web (Flask + Flyway)
-  # ---------------------------
   prod-web:
     build: .
     container_name: prod-web
@@ -62,7 +51,7 @@ services:
     depends_on:
       - prod-db
     ports:
-      - "5002:5000"   # 線上Web 對外連接埠 5002
+      - "5002:5000" 
 
 volumes:
   qa_db_data:

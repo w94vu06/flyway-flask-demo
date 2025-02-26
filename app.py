@@ -4,22 +4,18 @@ import os
 
 app = Flask(__name__)
 
-# 從環境變數讀取資料庫連線資訊
 DB_HOST = os.getenv("DB_HOST", "localhost")
 DB_PORT = os.getenv("DB_PORT", "5432")
-DB_NAME = os.getenv("POSTGRES_DB", "testdb")      # 預設: testdb
-DB_USER = os.getenv("POSTGRES_USER", "postgres")  # 預設: postgres
-DB_PASS = os.getenv("POSTGRES_PASSWORD", "root")  # 預設: root
+DB_NAME = os.getenv("POSTGRES_DB", "testdb") 
+DB_USER = os.getenv("POSTGRES_USER", "postgres")  
+DB_PASS = os.getenv("POSTGRES_PASSWORD", "root")  
 
 @app.route("/")
 def hello():
-    return "Hello World! This is Flask + Flyway Demo."
+    return "Hello World!"
 
 @app.route("/users")
 def get_users():
-    """
-    簡單示範: 從資料庫抓取 demo_user 資料
-    """
     try:
         conn = psycopg2.connect(
             host=DB_HOST,

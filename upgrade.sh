@@ -4,7 +4,7 @@ set -e
 
 echo "[1] 切到 release branch 並拉取最新程式碼"
 git fetch origin
-git checkout release  # 假設正式版分支叫做 release
+git checkout release
 git pull origin release
 
 echo "[2] 建構/更新 Docker 映像"
