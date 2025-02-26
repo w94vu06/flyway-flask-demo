@@ -10,7 +10,6 @@ DB_NAME = os.getenv("POSTGRES_DB", "testdb")
 DB_USER = os.getenv("POSTGRES_USER", "postgres")
 DB_PASS = os.getenv("POSTGRES_PASSWORD", "root")
 
-
 @app.route("/")
 def hello():
     return """
@@ -48,13 +47,12 @@ def hello():
         </head>
     <body>
         <img src="/static/fullscreen.png" alt="">
-        <a href="/car"><button type="button">購物車</button></a>
+        <a href="/list"><button type="button">查看中獎名單!!</button></a>
     </body>
     </html>
     """
 
-
-@app.route("/car")
+@app.route("/list")
 def get_users():
     try:
         conn = psycopg2.connect(
@@ -75,7 +73,6 @@ def get_users():
         ])
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
