@@ -41,13 +41,14 @@ def hello():
                     border-radius: 5px;
                 }
                 button:hover {
-                    background-color: #0056b3;  /* 滑鼠懸停時變更背景顏色 */
+                    background-color: #0056b3;
                 }
             </style>
         </head>
     <body>
         <img src="/static/fullscreen.png" alt="">
         <a href="/list"><button type="button">查看中獎名單!!</button></a>
+        <a href="/cart"><button type="button">購物車</button></a>
     </body>
     </html>
     """
@@ -73,6 +74,48 @@ def get_users():
         ])
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+@app.route("/cart")
+def cart_page():
+
+    try:
+        conn = psycopg2.connect(
+            host=DB_HOST,
+            port=DB_PORT,
+            database=DB_NAME,
+            user=DB_USER,
+            password=DB_PASS
+        )
+        cur = conn.cursor()
+        
+        cur.execute("SELECT id, product_name, quantity FROM cart_items;")
+        rows = cur.fetchall()
+        cur.close()
+        conn.close()
+
+        html_content = """
+        <html>
+        <head>
+            <title>購物車</title>
+        </head>
+        <body>
+            <h1>購物車內容</h1>
+            <table border="1" cellpadding="5" cellspacing="0">
+                <tr>
+                    <th>ID</th>
+                    <th>商品名稱</th>
+                    <th>數量</th>
+                </tr>
+        """
+        for row in rows:
+            html_content += f"<tr><td>{row[0]}</td><td>{row[1]}</td><td>{row[2]}</td></tr>"
+        html_content += "</table></body></html>"
+
+        return html_content
+
+    except Exception as e:
+        return f"購物車內容讀取失敗: {e}"
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
