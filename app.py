@@ -6,15 +6,55 @@ app = Flask(__name__)
 
 DB_HOST = os.getenv("DB_HOST", "localhost")
 DB_PORT = os.getenv("DB_PORT", "5432")
-DB_NAME = os.getenv("POSTGRES_DB", "testdb") 
-DB_USER = os.getenv("POSTGRES_USER", "postgres")  
-DB_PASS = os.getenv("POSTGRES_PASSWORD", "root")  
+DB_NAME = os.getenv("POSTGRES_DB", "testdb")
+DB_USER = os.getenv("POSTGRES_USER", "postgres")
+DB_PASS = os.getenv("POSTGRES_PASSWORD", "root")
+
 
 @app.route("/")
 def hello():
-    return "Hello World!"
+    return """
+    <html>
+    <head>
+        <title>加熱符</title>
+            <style>
+                body {
+                    margin: 0;
+                    overflow: hidden;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    height: 100vh;
+                }
+                img {
+                    width: 100vw;
+                    object-fit: cover;
+                }
+                button {
+                    padding: 10px 20px;
+                    font-size: 16px;
+                    margin-top: 20px;
+                    cursor: pointer; 
+                    background-color: #007BFF;
+                    color: white;
+                    border: none;
+                    border-radius: 5px;
+                }
+                button:hover {
+                    background-color: #0056b3;  /* 滑鼠懸停時變更背景顏色 */
+                }
+            </style>
+        </head>
+    <body>
+        <img src="/static/fullscreen.png" alt="">
+        <a href="/car"><button type="button">購物車</button></a>
+    </body>
+    </html>
+    """
 
-@app.route("/users")
+
+@app.route("/car")
 def get_users():
     try:
         conn = psycopg2.connect(
@@ -35,6 +75,7 @@ def get_users():
         ])
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
