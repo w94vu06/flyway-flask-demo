@@ -41,7 +41,7 @@ def hello():
                     border-radius: 5px;
                 }
                 button:hover {
-                    background-color: #0056b3;  /* 滑鼠懸停時變更背景顏色 */
+                    background-color: #0056b3;
                 }
             </style>
         </head>

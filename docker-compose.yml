@@ -1,7 +1,7 @@
 version: '3.8'
 services:
 
-  qa-db:
+  qa-db: # port 5433
     image: postgres:14
     container_name: qa-db
     environment:
@@ -13,7 +13,7 @@ services:
     volumes:
       - qa_db_data:/var/lib/postgresql/data
 
-  qa-web:
+  qa-web: # port 5001
     build: .
     container_name: qa-web
     environment:
@@ -27,7 +27,7 @@ services:
     ports:
       - "5001:5000" 
 
-  prod-db:
+  prod-db: # port 5434
     image: postgres:14
     container_name: prod-db
     environment:
@@ -39,7 +39,7 @@ services:
     volumes:
       - prod_db_data:/var/lib/postgresql/data
 
-  prod-web:
+  prod-web:  # port 5002
     build: .
     container_name: prod-web
     environment:
